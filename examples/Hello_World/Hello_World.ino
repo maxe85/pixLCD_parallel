@@ -1,5 +1,5 @@
 #include "pixLCD.h"
-
+#define BACKLIGHT 13
 // start LCD with EnablePin
 pixLCD pix(12);
 
@@ -7,8 +7,10 @@ pixLCD pix(12);
 char text[] = "Hello World!\0I can wrap lines by myself and xterminate at the end of the screen. \1 ";
 
 void setup() {
+  // enable acklight
+  pinMode(BACKLIGHT,OUTPUT);
+  digitalWrite(BACKLIGHT,HIGH);
   
-  pinMode(13,1);digitalWrite(13,1);
 // write to position x,y, pointer to char , optional delay between characters
   pix.write(         2,1, text            , 200  );
 
