@@ -40,18 +40,19 @@ void setup() {
 
 void loop()
 {
-  // show characters page 1
-  if (millis() > 20000)
+  
+  if (millis() > 20000) // remove the terminator after a while
   {
     text[0x40] = 1;
   }
   
+  // show characters page 1
   for (int i=0;i< 0x40;i++)
   {
     text[i] = i;
   }
-  
-  if ( pix.write(1,0,text+1,20)[0] )
+ 
+  if ( pix.write(1,0,text+1,20)[0] ) // to avoid the terminator in text[0]
   {
     // delays only if writing has reached the end of the screen
     delay(2000);
