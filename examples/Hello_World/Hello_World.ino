@@ -54,7 +54,7 @@ void loop()
  
   if ( pix.write(1,0,text+1,20)[0] ) // to avoid the terminator in text[0]
   {
-    // delays only if writing has reached the end of the screen
+    // delays only if writing has been terminated by the terminator
     delay(2000);
   }
   pix.clear();
