@@ -29,7 +29,7 @@ write(posX, posY, string, delay);
   Retrun:
     a pointer to the first character, that isn't displayed (see Hello_World example)
 writeTiny(string, startX, startY, endX, endY)
-  same as write(), jutst a little bit more advanced, but uses a 5x7 size char set, created in graphic, so the data source is about
+  same as write(), jutst a little bit more advanced, but uses a 5x7 size char set, created in graphic, so the data source is about 900 bytes
   Arguments:
     string - a pointer to a char array
     positions are in pixel from left and top, default is using she whole screen 0,0,128,64
