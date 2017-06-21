@@ -5,7 +5,7 @@
 
 pixLCD pix(12);
 
-char a_long_string[] = "Call the method like this:\nwriteTiny( *char,\n\t\t\tstartX, startY,\n\t\t\tendX, endY)\nAll coordinates are optional!\0It will wrap lines at whitespaces and tabs before the last word exceedes the limit.\nIf you use a tab and the line gets wrapped, the tab will be displayed at the beginning of the next line.\nI just want to tell a few things to create a long text to demonstrate the returned pointer. It points to the first not displayed char, so it may point to a zero if the string terminates. If you know it doesn't, like I knewhere, you need to increment the pointer to start with the next character.\nHave Fun!!\0since the string was terminated, this will no be displayed";
+char a_long_string[] = "Call the method like this:\nwriteTiny( *char,\n\t\t\tstartX, startY,\n\t\t\tendX, endY)\nAll coordinates are optional!\0It will wrap lines at whitespaces and tabs before the last word exceedes the limit.\nIf you use a tab and the line gets wrapped, the tab will be displayed at the beginning of the next line.\nI just want to tell a lot of things to create a long text to demonstrate the returned pointer. It points to the first not displayed char, so it may point to a zero if the string terminates. If you know it doesn't, like I knewhere, you need to increment the pointer to start with the next character.\nHave Fun!!\0since the string was terminated, this will no be displayed";
 char* pointer_to_first_not_displayed_char;
 void setup()
 {
@@ -21,7 +21,7 @@ void loop()
 {
   
   
-  pointer_to_first_not_displayed_char = pix.writeTiny(a_long_string);
+  pointer_to_first_not_displayed_char = pix.writeTiny(a_long_string,4,3);
   
   delay(8000);
 
