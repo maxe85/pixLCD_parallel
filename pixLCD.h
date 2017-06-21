@@ -7,8 +7,8 @@
 
 	//#define LCD_E	4	// uno pin 12  - gets configured by the constructor
 
-	#define LCD_PSB	0 	// uno pin 8
-	#define LCD_RST	1 	// uno pin 9
+//	#define LCD_PSB	0 	// uno pin 8
+//	#define LCD_RST	1 	// uno pin 9
 	#define LCD_RS	2	// uno pin 10
 	#define LCD_RW	3	// uno pin 11
 

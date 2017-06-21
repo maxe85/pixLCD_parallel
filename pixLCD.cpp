@@ -1,4 +1,5 @@
 #include "Arduino.h"
+#include <avr/pgmspace.h>
 #include "pixLCD.h"
 #include "TinyCharsDataSource.h"
 
@@ -11,8 +12,10 @@ pixLCD::pixLCD(uint8_t Epin)
 {   
 	__EnablePin = Epin;
 #endif 
-    LCD_CTRL_OUT();   
+    LCD_CTRL_OUT();
+#ifdef LCD_PSB
     LCD_PSB_HIGH();   
+#endif
     __Write(LCD_COMMAND,LCD_BASIC_FUNCTION); 
     __Write(LCD_COMMAND,LCD_CLEAR_SCREEN);   
     __Write(LCD_COMMAND,0x06);           
@@ -239,17 +242,17 @@ char*	pixLCD::writeTiny(const uint8_t *str, uint8_t startX,uint8_t startY, uint8
 			__clearBuffer(7);
 			while ( __buffer[10] >= 0 && __buffer[11]) // prepare ints while INT_INDEX is in range
 			{
-				__buffer[10] -= (tinyCharSet[ *str *7 ]>>5) & 0x07;
+				__buffer[10] -= (pgm_read_byte_near(tinyCharSet + *str *7)>>5) & 0x07;
 				for (uint8_t i=0;i<7;i++)
 				{
 					if (__buffer[10]>0)
-						__buffer[i] |= (tinyCharSet[ *str *7 +i ] & 0x1f)<<__buffer[10];	//add char
+						__buffer[i] |= (pgm_read_byte_near(tinyCharSet +  *str *7 +i ) & 0x1f)<<__buffer[10];	//add char
 					else
-						__buffer[i] |= (tinyCharSet[ *str *7 +i ] & 0x1f)>>(-__buffer[10]); //add char if in next col
+						__buffer[i] |= (pgm_read_byte_near(tinyCharSet +  *str *7 +i ) & 0x1f)>>(-__buffer[10]); //add char if in next col
 				}
 				if (__buffer[10] < 0)	// if INT_length is exceeded while char is not written yet
 				{		// adjust INT_INDEX for continuing that char
-					__buffer[10] += (tinyCharSet[ *str *7 ]>>5) & 0x07;
+					__buffer[10] += (pgm_read_byte_near(tinyCharSet + *str *7)>>5) & 0x07;
 					break;
 				}
 				str++;			// increase char pointer
@@ -264,14 +267,10 @@ char*	pixLCD::writeTiny(const uint8_t *str, uint8_t startX,uint8_t startY, uint8
 		}	//	>	>	>	>	>	>	>	>	>	>	>	>	>	>	end int loop
 		__buffer[10] = 16-(startX%0x10);	// reset INT_INDEX
 	    __buffer[9]  = (startX&0x3f) / 16;	// reset COL_INDEX
-		startY += 8; 
-		if ((*str)&0xff == 0 )	
-			break;						// increase LINE_INDEX
-		if (	*str == 0x0A ||	// if char isnewLine or whitespace
-				*str == 0x20)	//  at the beginning of the next line
-		{
-			str++;
-		}
+		startY += 8; 						// incement LINE_INDEX
+		if (*str == 0 )	
+			break;
+		str++;
 	} //>	>	>	>	>	>	>	>	>	>	>	>	>	>	>	>	end line loop
 	return str;
 } 
