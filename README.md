@@ -17,15 +17,21 @@ Constructor: Call an instance of "pixLCD pix(ENABLE_PIN);"
 
 Methodes:
 
-pix.write(posX, posY, string, delay);
-  Parameters:
+clear();
+  clears the screen (text)
+clearGraph()
+  clears the screen (graphic)
+write(posX, posY, string, delay);
+  Argumentss:
     positions are byte (aka unsigned char) 0x00-0x0F and 0x00-0x03, higher values get casted
-    string is a (pointer to a) char array, alternating start positions can easily be accessed (see Hello_World example)
+    string is a (pointer to a) char array, start positions can easily be accessed (see Hello_World example)
     delay is optional, the inbuilt delay time after each character
   Retrun:
     a pointer to the first character, that isn't displayed (see Hello_World example)
-pix.clear();
-  clears the screen
-  
-... to be continued
-    
+writeTiny(string, startX, startY, endX, endY)
+  same as write(), jutst a little bit more advanced, but uses a 5x7 size char set, created in graphic, so the data source is about
+  Arguments:
+    string - a pointer to a char array
+    positions are in pixel from left and top, default is using she whole screen 0,0,128,64
+  Return:
+    a pointer to the first not displayed char if not(whitspace or newLine) else next char
