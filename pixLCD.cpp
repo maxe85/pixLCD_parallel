@@ -234,7 +234,7 @@ char*	pixLCD::writeTiny(const uint8_t *str, uint8_t startX,uint8_t startY, uint8
 				break;
 			if (i)			// letter spacing after first char
 				__buffer[12]++;
-			__buffer[12] +=	(tinyCharSet[ str[i] *7 ]>>5) & 0x07;	// add the CHAR_length
+			__buffer[12] +=	(pgm_read_byte_near( tinyCharSet + str[i] *7 )>>5) & 0x07;	// add the CHAR_length
 		} //	-	-	-	-	-	-	-	-	-	-	-	-	-	-	end get chars in line
 
 		while (__buffer[11])	//	>	>	>	>	>	>	>	>	begin int loop
@@ -270,7 +270,8 @@ char*	pixLCD::writeTiny(const uint8_t *str, uint8_t startX,uint8_t startY, uint8
 		startY += 8; 						// incement LINE_INDEX
 		if (*str == 0 )	
 			break;
-		str++;
+		if (*str == 0x0A || *str == 0x20) // increment char pointer if whitespace or new line
+			str++;
 	} //>	>	>	>	>	>	>	>	>	>	>	>	>	>	>	>	end line loop
 	return str;
 } 
